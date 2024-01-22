@@ -3,16 +3,19 @@ import os
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
+# Returns a random card from a range of cards list.
 def return_random_card():
     card_index = random.randint(0, len(cards)-1)
     return cards[card_index]
 
+# Returns the starting hand containing two cards.
 def deal_starting_hand():
     starting_hand = []
     for _ in range(2):
         starting_hand.append(return_random_card())
     return starting_hand
 
+# Calculates score for a given hand.
 def calculate_score(hand):
     score = 0
     has_ace = False
@@ -31,19 +34,23 @@ def calculate_score(hand):
             score += card
     
     return score
- 
-def print_unrevealed(user_hand, computer_hand, user_score, computer_score):
+
+# Prints a hand and a score of a user and first card and score of a computer.
+def print_unrevealed(user_hand, computer_hand, user_score):
     print(f"     Your cards: {user_hand}, your score: {user_score}.")
     print(f"     Computer cards: [{computer_hand[0]} X], computer score: {computer_hand[0]}.\n")
 
+# Prints a hand and a score of a user and a computer.
 def print_revealed(user_hand, computer_hand, user_score, computer_score):
     print(f"     Your cards: {user_hand}, your score: {user_score}.")
     print(f"     Computer cards: {computer_hand}, computer score: {computer_score}.\n")
 
+# Prints a final hand and a final score of a user and a computer.
 def print_final(user_hand, computer_hand, user_score, computer_score):
     print(f"     Your final cards: {user_hand}, your final score: {user_score}.")
     print(f"     Computer's final cards: {computer_hand}, computer's final score: {computer_score}.\n")
-    
+
+# Evaluates user decision on the another card.    
 def want_card():
     want_card = input("Type 'y' to get another card, type 'n' to pass: ").lower()
     if want_card == "y":
@@ -52,6 +59,7 @@ def want_card():
         another_card = False
     return another_card
 
+# Evaluates user decision on the another game.
 def want_continue():
     want_continue = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower()
     if want_continue == "y":
@@ -60,6 +68,7 @@ def want_continue():
     elif want_continue == "n":
         exit()
 
+# Runs the blackjack game.
 def blackjack():
     user_hand = deal_starting_hand()
     computer_hand = deal_starting_hand()
@@ -75,16 +84,8 @@ def blackjack():
         print_revealed(user_hand, computer_hand, user_score, computer_score)
         print("     You have blackjack! You win :).")
         want_continue()
-    elif computer_score > 21:
-        print_revealed(user_hand, computer_hand, user_score, computer_score)
-        print("     Computer went over. You win :).")
-        want_continue()
-    elif user_score > 21:
-        print_revealed(user_hand, computer_hand, user_score, computer_score)
-        print("     You went over. You lose :(.")
-        want_continue()
     else:
-        print_unrevealed(user_hand, computer_hand, user_score, computer_score)
+        print_unrevealed(user_hand, computer_hand, user_score)
     
     another_card = want_card()
     while another_card == True:
@@ -99,10 +100,11 @@ def blackjack():
             print("     You went over. You lose :(.\n")
             want_continue()
         else:
-            print_unrevealed(user_hand, computer_hand, user_score, computer_score)
+            print_unrevealed(user_hand, computer_hand, user_score)
         
         another_card = want_card()
 
+    # Prints initial computer's hand.
     print_revealed(user_hand, computer_hand, user_score, computer_score)
 
     while computer_score <= 16:
@@ -116,6 +118,7 @@ def blackjack():
             print_revealed(user_hand, computer_hand, user_score, computer_score)
             print("     Computer went over. You win :).\n")
             want_continue()
+        # Prints each hand that the computer gets.
         elif computer_score <= 16:
             print_revealed(user_hand, computer_hand, user_score, computer_score)
     
