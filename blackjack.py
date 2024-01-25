@@ -1,5 +1,6 @@
 import random
 import os
+from art import logo
 
 def deal_card():
     """Return a random card from a deck."""
@@ -20,8 +21,12 @@ def calculate_score(hand):
 
 def compare(user_score, computer_score):
     """Compare user's and computer's scores."""
-    if computer_score == 0:
-            print("     Computer has blackjack, you lose :(.\n")
+    if user_score > 21 and computer_score > 21:
+        print("     You went over. You lose :(.\n")
+    elif user_score == computer_score:
+        print("     Draw.\n")
+    elif computer_score == 0:
+        print("     Computer has blackjack, you lose :(.\n")
     elif user_score == 0:
         print("     You have blackjack! You win :).\n")
     elif computer_score > 21:
@@ -35,6 +40,7 @@ def compare(user_score, computer_score):
 
 def play_game():
     """Play a blackjack game."""
+    print(logo)
     user_hand = []
     computer_hand = []
     # Deal starting hands.
@@ -57,7 +63,7 @@ def play_game():
             print(f"     Your cards: {user_hand}, your score: {user_score}.")
             print(f"     Computer cards: {computer_hand[0]} X].\n")
                 
-    while user_score < 21 and computer_score <= 16:
+    while user_score < 21 and computer_score < 17:
         # Deal card for the computer until the score goes over 16.
         computer_hand.append(deal_card())
         computer_score = calculate_score(computer_hand)
